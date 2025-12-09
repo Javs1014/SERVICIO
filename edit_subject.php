@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("sss", $nueva_clave, $nombre, $clave_materia); // Vincula los parámetros
         $stmt->execute(); // Ejecuta la consulta
         $stmt->close(); // Cierra el statement
-        header("Location: manage_subjects.php"); // Redirige a la página de gestión de materias
+        header("Location: add_user  .php"); // Redirige a la página de gestión de materias
         exit; // Termina la ejecución del script
     } else {
         $error = "Todos los campos son obligatorios."; // Mensaje de error si faltan campos
@@ -86,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="upload_form.php"><i class="fas fa-upload"></i> SUBIR</a> <!-- Enlace para subir archivos -->
             <a href="add_user.php"><i class="fas fa-folder-open"></i> GESTION</a> <!-- Enlace a gestión de usuarios/profesores -->
             <a href="all_Profiles.php"><i class="fas fa-user"></i> PERFILES</a> <!-- Enlace a los perfiles -->
-            <a href="manage_subjects.php"><i class="fas fa-book"></i> MATERIAS</a> <!-- Enlace a gestión de materias -->
+
         </div>
         <a href="logout.php" class="logout"><i class="fas fa-sign-out-alt"></i> CERRAR</a> <!-- Enlace para cerrar sesión -->
     </div>

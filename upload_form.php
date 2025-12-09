@@ -306,43 +306,77 @@ if ($is_authorized_to_display_form) {
         const camposAcademicos = document.querySelector(".campos-academicos");
 
         // Agrega un evento de clic a cada botón de tipo
-        buttons.forEach(button => {
-            button.addEventListener("click", function() {
-                // Remueve la clase 'active' de todos los botones
-                buttons.forEach(btn => btn.classList.remove("active"));
-                // Agrega la clase 'active' al botón clicado
-                this.classList.add("active");
+buttons.forEach(button => {
+    button.addEventListener("click", function() {
+        // Remueve la clase 'active' de todos los botones
+        buttons.forEach(btn => btn.classList.remove("active"));
+        // Agrega la clase 'active' al botón clicado
+        this.classList.add("active");
 
-                // Controla la visibilidad del selector de subtipos y los campos académicos
-                if (this.dataset.type === "otros") {
-                    // Muestra el selector de subtipos para "Otros"
-                    otrosTipoContainer.style.display = "block";
-                    // Oculta los campos académicos
-                    camposAcademicos.style.display = "none";
-                    // Establece el valor del campo oculto con el subtipo seleccionado
-                    document.getElementById("tipo_documento").value = "otros_" + otrosTipoSelect.value;
-                    
-                    // Elimina el atributo 'required' de los campos académicos
-                    document.getElementById("periodo").removeAttribute("required");
-                    document.getElementById("anio").removeAttribute("required");
-                    document.getElementById("clave_materia").removeAttribute("required");
-                    document.getElementById("grupo").removeAttribute("required");
-                } else {
-                    // Oculta el selector de subtipos
-                    otrosTipoContainer.style.display = "none";
-                    // Muestra los campos académicos
-                    camposAcademicos.style.display = "block";
-                    // Establece el valor del campo oculto con el tipo seleccionado
-                    document.getElementById("tipo_documento").value = this.dataset.type;
-                    
-                    // Restaura el atributo 'required' en los campos académicos
-                    document.getElementById("periodo").setAttribute("required", "");
-                    document.getElementById("anio").setAttribute("required", "");
-                    document.getElementById("clave_materia").setAttribute("required", "");
-                    document.getElementById("grupo").setAttribute("required", "");
-                }
-            });
-        });
+        const type = this.dataset.type;
+        
+        // Referencias a los inputs y sus contenedores
+        const claveInput = document.getElementById("clave_materia");
+        const grupoInput = document.getElementById("grupo");
+        // Buscamos el contenedor .input-group padre para ocultarlo visualmente
+        const claveContainer = claveInput.closest('.input-group');
+        const grupoContainer = grupoInput.closest('.input-group');
+
+        // LÓGICA DE VISIBILIDAD
+        if (type === "otros") {
+            // Caso OTROS: Muestra subtipos, oculta campos académicos
+            otrosTipoContainer.style.display = "block";
+            camposAcademicos.style.display = "none";
+            
+            document.getElementById("tipo_documento").value = "otros_" + otrosTipoSelect.value;
+            
+            // Quitar required de todo
+            document.getElementById("periodo").removeAttribute("required");
+            document.getElementById("anio").removeAttribute("required");
+            claveInput.removeAttribute("required");
+            grupoInput.removeAttribute("required");
+
+        } else if (type === "horario") {
+            // CASO HORARIO: Muestra Periodo/Año, pero OCULTA Clave y Grupo
+            otrosTipoContainer.style.display = "none";
+            camposAcademicos.style.display = "block"; // Asegura que el contenedor principal sea visible
+            
+            // Ocultar específicamente Clave y Grupo
+            claveContainer.style.display = "none";
+            grupoContainer.style.display = "none";
+            
+            document.getElementById("tipo_documento").value = "horario";
+
+            // Required solo para Periodo y Año
+            document.getElementById("periodo").setAttribute("required", "");
+            document.getElementById("anio").setAttribute("required", "");
+            
+            // Quitar required de los ocultos
+            claveInput.removeAttribute("required");
+            grupoInput.removeAttribute("required");
+            // Limpiar valores para evitar envíos sucios
+            claveInput.value = "";
+            grupoInput.value = "";
+
+        } else {
+            // CASO ACTA (o Default): Muestra todo
+            otrosTipoContainer.style.display = "none";
+            camposAcademicos.style.display = "block";
+            
+            // Mostrar Clave y Grupo
+            claveContainer.style.display = "block";
+            grupoContainer.style.display = "block";
+
+            document.getElementById("tipo_documento").value = this.dataset.type;
+            
+            // Todos required
+            document.getElementById("periodo").setAttribute("required", "");
+            document.getElementById("anio").setAttribute("required", "");
+            claveInput.setAttribute("required", "");
+            grupoInput.setAttribute("required", "");
+        }
+    });
+});
 
         // Actualiza el valor del campo oculto cuando cambia el selector de subtipos
         otrosTipoSelect.addEventListener("change", function() {

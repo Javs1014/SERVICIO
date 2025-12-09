@@ -355,7 +355,7 @@ $conn->close(); // Cierra la conexión a la base de datos
                                            class="btn edit-btn">
                                            ✏️ Editar Contraseña
                                         </a> <!-- Enlace para editar contraseña -->
-                                        <a href="../CRUD/delete_user.php?id=<?= $usuario['id_usuario'] ?>" 
+                                        <a href="delete_user.php?id=<?= $usuario['id_usuario'] ?>" 
                                            class="btn delete-btn" 
                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
                                            🗑 Eliminar
@@ -424,7 +424,7 @@ $conn->close(); // Cierra la conexión a la base de datos
                                            class="btn edit-btn">
                                            ✏️ Editar
                                         </a> <!-- Enlace para editar profesor -->
-                                        <a href="../CRUD/delete_professor.php?id=<?= $profesor['id_profesor'] ?>" 
+                                        <a href="delete_professor.php?id=<?= $profesor['id_profesor'] ?>" 
                                            class="btn delete-btn" 
                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este profesor?');">
                                            🗑 Eliminar

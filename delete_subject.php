@@ -19,7 +19,7 @@ if (!$is_authorized) {
 $clave_materia = $_GET['clave_materia'] ?? null;
 // Verifica si se proporcionó una clave de materia
 if (!$clave_materia) {
-    header("Location: manage_subjects.php"); // Redirige a la página de gestión de materias
+    header("Location: add_user.php"); // Redirige a la página de gestión de materias
     exit; // Termina la ejecución del script
 }
 
@@ -43,6 +43,6 @@ if ($materia && stripos($materia['nombre'], 'servicio') === false) {
 }
 
 // Redirige a la página de gestión de materias
-header("Location: manage_subjects.php");
+header("Location: add_user.php");
 exit; // Termina la ejecución del script
 ?>
